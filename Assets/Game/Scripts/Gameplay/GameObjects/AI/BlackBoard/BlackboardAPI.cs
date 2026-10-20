@@ -1,7 +1,7 @@
 using UnityEngine;
 using Modules.AI;
 [BlackboardAPI]
-public static class BlackBoardAPI
+public static class BlackboardAPI
 {
     public static BlackboardValueKey<GameObject> Character = new(nameof(Character));
 
