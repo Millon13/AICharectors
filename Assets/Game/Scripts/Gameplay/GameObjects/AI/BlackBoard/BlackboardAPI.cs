@@ -9,6 +9,10 @@ public static class BlackboardAPI
     //Stop
     //Hold Position
     //Moving
+    // MoveTo command
+    public static readonly BlackboardTagKey MoveTo = new(nameof(MoveTo));
+    public static readonly BlackboardValueKey<Vector3> MoveToPosition = new(nameof(MoveToPosition));
+    public static readonly BlackboardValueKey<GameObject> MoveToTarget = new(nameof(MoveToTarget));
     //Patrol
     public static readonly BlackboardValueKey<Transform[]> Waypoints = new(nameof(Waypoints)); 
     public static readonly BlackboardValueKey<int> WaypointIndex = new(nameof(WaypointIndex));
@@ -22,6 +26,11 @@ public static class BlackboardAPI
     public static BlackboardValueKey<float> MaxRangeDistance = new(nameof(MaxRangeDistance));
     //Follow
     
+    // Command Queue
+    public static readonly BlackboardTagKey HasQueuedCommand = new(nameof(HasQueuedCommand));
+    public static readonly BlackboardTagKey HoldPosition = new(nameof(HoldPosition));
+    public static readonly BlackboardValueKey<Vector3> HoldPositionPoint = new(nameof(HoldPositionPoint));
+    public static readonly BlackboardValueKey<float> HoldAttackRadius = new(nameof(HoldAttackRadius));
     
     
 }

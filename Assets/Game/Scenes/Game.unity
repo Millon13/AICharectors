@@ -119,37 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &21770796
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 21770797}
-  m_Layer: 0
-  m_Name: GameObject (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &21770797
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 21770796}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 900183960}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &134902659
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,8 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 134902660}
+  - component: {fileID: 134902661}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: <MoveTo>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,9 +148,35 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 476577487}
   m_Father: {fileID: 1131232836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &134902661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134902659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5aac40b1864451b1b5db36a1e61854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Modules.AI.BehaviourTree::Modules.AI.BehaviourNodeWhile
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _condition:
+    rid: 4421284945436082256
+  _child: {fileID: 476577488}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4421284945436082256
+      type: {class: HasTagCondition, ns: SampleGame.AI.Conditions, asm: Assembly-CSharp}
+      data:
+        _blackboard: {fileID: 993842647}
+        _tag: MoveTo
 --- !u!1 &203376321
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.MoveInputHandler
   _character: {fileID: 1179872082}
   _next: {fileID: 0}
+  _commandQueue: {fileID: 1141581192752668297}
 --- !u!1 &452763493
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,6 +470,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4473757027215454236, guid: f82db08d1eee94b9791aca8b635c4482, type: 3}
   m_PrefabInstance: {fileID: 459566252}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &476577486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 476577487}
+  - component: {fileID: 476577488}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &476577487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476577486}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 134902660}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &476577488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476577486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5bd3a93e954502b0ba5a4ba887bb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.MoveToTargetNode
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _blackboard: {fileID: 993842647}
+  _queue: {fileID: 1141581192752668297}
+  _stoppingDistance: 0.5
 --- !u!1 &504420564
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,8 +947,8 @@ MonoBehaviour:
   _useUnityLifecycle: 0
   _updateMode: 0
   _blackboard: {fileID: 993842647}
-  _targetKey: Enemy
-  _stoppingDistance: MeleeDistance
+  _queue: {fileID: 0}
+  _stoppingDistance: 0.5
 --- !u!1 &781432832
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,7 +1025,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1143422354}
-  - {fileID: 21770797}
   m_Father: {fileID: 1592994786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &900183961
@@ -996,7 +1041,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Modules.AI.BehaviourTree::Modules.AI.BehaviourNodeSequence
   _useUnityLifecycle: 0
   _updateMode: 0
-  _nodes: []
+  _nodes:
+  - {fileID: 900183961}
 --- !u!1 &906546670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,13 +1247,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Modules.AI.Blackboard::Modules.AI.Blackboard
   installOnAwake: 1
-  installers: []
+  installers:
+  - rid: 4421284946502221912
   autoCompile: 0
-  initialTagCapacity: 1
+  initialTagCapacity: 0
   initialValueCapacity: 1
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4421284946502221912
+      type: {class: GameObjectBlackboardInstaller, ns: Modules.AI, asm: Modules.AI.Blackboard}
+      data:
+        key: Character
+        value: {fileID: 1592994785}
 --- !u!1 &1085144107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,7 +1340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Modules.AI.BehaviourTree::Modules.AI.BehaviourNodeSequence
   _useUnityLifecycle: 0
   _updateMode: 0
-  _nodes: []
+  _nodes:
+  - {fileID: 134902661}
 --- !u!1 &1131992748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,8 +1382,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1143422354}
+  - component: {fileID: 1143422355}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: <HoldPositionNode>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1351,6 +1405,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 900183960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1143422355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143422353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5aac40b1864451b1b5db36a1e61854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Modules.AI.BehaviourTree::Modules.AI.BehaviourNodeWhile
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _condition:
+    rid: 4421284945436082247
+  _child: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4421284945436082247
+      type: {class: HasTagCondition, ns: SampleGame.AI.Conditions, asm: Assembly-CSharp}
+      data:
+        _blackboard: {fileID: 993842647}
+        _tag: HoldPosition
 --- !u!1 &1146950747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,10 +1742,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1131232836}
   - {fileID: 900183960}
   - {fileID: 203376322}
   - {fileID: 2112293174}
-  - {fileID: 1131232836}
   - {fileID: 1654021285}
   - {fileID: 600129982}
   m_Father: {fileID: 1227915338}
@@ -1686,12 +1765,12 @@ MonoBehaviour:
   _useUnityLifecycle: 0
   _updateMode: 0
   _nodes:
+  - {fileID: 1131232837}
+  - {fileID: 1654021286}
   - {fileID: 2112293176}
   - {fileID: 600129983}
   - {fileID: 203376323}
   - {fileID: 900183961}
-  - {fileID: 1131232837}
-  - {fileID: 1654021286}
 --- !u!1 &1654021284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2222,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4473757027215454236, guid: f82db08d1eee94b9791aca8b635c4482, type: 3}
   m_PrefabInstance: {fileID: 7613773963679934943}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1141581192752668297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179872082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bd6b8251d841529d7474036e7af8fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.CommandQueueComponent
+  _blackboard: {fileID: 993842647}
+  _defaultHoldRadius: 6
 --- !u!1001 &7613773963679934943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2218,7 +2311,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7896759888454424343, guid: f82db08d1eee94b9791aca8b635c4482, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1141581192752668297}
   m_SourcePrefab: {fileID: 100100000, guid: f82db08d1eee94b9791aca8b635c4482, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
