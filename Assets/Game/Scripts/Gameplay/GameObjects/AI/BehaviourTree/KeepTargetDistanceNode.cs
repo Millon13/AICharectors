@@ -43,7 +43,6 @@ namespace SampleGame.AI.BehaviourTree
                 character.GetComponent<MoveComponent>().MoveStep(delta.normalized, deltaTime);
                 return BehaviourResult.Running;
             }
-            
             return BehaviourResult.Running;
         }
 
@@ -55,6 +54,5 @@ namespace SampleGame.AI.BehaviourTree
                     move.MoveStep(Vector3.zero, 0f);
             }
         }
-    
     }
 }

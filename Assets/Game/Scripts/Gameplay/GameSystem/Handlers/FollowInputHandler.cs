@@ -1,3 +1,4 @@
+using SampleGame.AI.BehaviourTree;
 using UnityEngine;
 
 namespace SampleGame
@@ -9,7 +10,8 @@ namespace SampleGame
 
         [SerializeField]
         private GameObject _character;
-
+        [SerializeField]
+        private CommandQueueComponent _commandQueue;
         [SerializeField]
         private InputHandler _next;
 
@@ -17,15 +19,26 @@ namespace SampleGame
         {
             if (Input.GetKey(_keyCode) && context.leftClick)
             {
+                bool isShift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 if (context.point != null)
                 {
-                    // TODO: Follow point
+                    var cmd = QueuedCommand.MoveTo(context.point.Value);
+                    if (isShift) _commandQueue.Enqueue(cmd);
+                    else _commandQueue.ForceCommand(cmd);
+                    
+                    context.enqueueCommand = true;
                 }
                 else if (context.target != null && context.target != _character)
                 {
-                    // TODO: Follow target
+                    var cmd = QueuedCommand.Follow(context.target);
+                    if (isShift) _commandQueue.Enqueue(cmd);
+                    else _commandQueue.ForceCommand(cmd);
+                    
+                    context.enqueueCommand = true;
                 }
+                return;
             }
+            
             else if (_next) 
                 _next.Handle(ref context);
         }

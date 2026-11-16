@@ -1,3 +1,4 @@
+using SampleGame.AI.BehaviourTree;
 using UnityEngine;
 
 namespace SampleGame
@@ -12,18 +13,37 @@ namespace SampleGame
 
         [SerializeField]
         private InputHandler _next;
+        [SerializeField]
+        private CommandQueueComponent _commandQueue;
 
         public override void Handle(ref InputContext context)
         {
             if (Input.GetKey(_keyCode) && context.leftClick)
             {
+                bool isShift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 if (context.point != null)
                 {
-                    // TODO: Attack Position
+                    var cmd = QueuedCommand.Attack(context.point.Value);
+                    if (isShift) _commandQueue.Enqueue(cmd);
+                    else _commandQueue.ForceCommand(cmd);
+                    
+                    context.enqueueCommand = true;
                 }
                 else if (context.target != null && context.target != _character)
                 {
-                    // TODO: Attack Target
+                    if (_character.TryGetComponent(out TeamComponent myTeam) && myTeam.IsEnemy(context.target))
+                    {
+                        var cmd = QueuedCommand.Attack(context.target);
+                        if (isShift) _commandQueue.Enqueue(cmd);
+                        else _commandQueue.ForceCommand(cmd);
+                        
+                        context.enqueueCommand = true;
+                    }
+                    else
+                    {
+                        Debug.Log("Цель не является врагом!");
+                    }
+                    return;
                 }
             }
             else if (_next)

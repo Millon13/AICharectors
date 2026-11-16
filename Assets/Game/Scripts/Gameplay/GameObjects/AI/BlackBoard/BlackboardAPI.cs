@@ -7,7 +7,7 @@ public static class BlackboardAPI
 
     
     //Stop
-    //Hold Position
+   
     //Moving
     // MoveTo command
     public static readonly BlackboardTagKey MoveTo = new(nameof(MoveTo));
@@ -21,13 +21,20 @@ public static class BlackboardAPI
     public static readonly BlackboardValueKey<float> StoppingAngle = new(nameof(StoppingAngle));
     //Attack 
     public static BlackboardValueKey<GameObject> Enemy = new(nameof(Enemy));
+    public static readonly BlackboardTagKey AttackCommand = new(nameof(AttackCommand));
+    public static readonly BlackboardValueKey<GameObject> AttackTarget = new(nameof(AttackTarget));
+    public static readonly BlackboardValueKey<Vector3> AttackMovePosition = new(nameof(AttackMovePosition));
     public static BlackboardValueKey<float> MeleeDistance = new(nameof(MeleeDistance));
     public static BlackboardValueKey<float> MinRangeDistance = new(nameof(MinRangeDistance));
     public static BlackboardValueKey<float> MaxRangeDistance = new(nameof(MaxRangeDistance));
+
     //Follow
-    
+    public static readonly BlackboardTagKey Follow = new(nameof(Follow));
+    public static readonly BlackboardValueKey<GameObject> FollowTarget = new(nameof(FollowTarget));
     // Command Queue
     public static readonly BlackboardTagKey HasQueuedCommand = new(nameof(HasQueuedCommand));
+    //Hold Position
+    public static readonly BlackboardValueKey<GameObject> HoldTarget = new(nameof(HoldTarget));
     public static readonly BlackboardTagKey HoldPosition = new(nameof(HoldPosition));
     public static readonly BlackboardValueKey<Vector3> HoldPositionPoint = new(nameof(HoldPositionPoint));
     public static readonly BlackboardValueKey<float> HoldAttackRadius = new(nameof(HoldAttackRadius));

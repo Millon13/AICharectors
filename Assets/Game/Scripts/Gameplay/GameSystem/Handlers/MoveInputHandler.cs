@@ -12,13 +12,15 @@ namespace SampleGame
         private InputHandler _next;
         
         [SerializeField]
+        private KeyCode _keyCode = KeyCode.M;
+        [SerializeField]
         private CommandQueueComponent _commandQueue;
 
         public override void Handle(ref InputContext context)
         {
-            if (context.leftClick)
+            if (Input.GetKey(_keyCode) && context.leftClick)
             {
-                bool isShiftHeld = Input.GetKey(KeyCode.M); // Из ТЗ: ЛКМ + M
+                bool isShiftHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 bool hasEntity = context.target != null && context.target != _character;
                 bool hasPoint = context.point.HasValue;
                 
@@ -27,9 +29,9 @@ namespace SampleGame
                     var command = QueuedCommand.MoveTo(context.target);
                     
                     if (isShiftHeld)
-                        _commandQueue.Enqueue(command);      // Отложенная
+                        _commandQueue.Enqueue(command);     
                     else
-                        _commandQueue.ForceCommand(command); // Прямая (сброс текущей)
+                        _commandQueue.ForceCommand(command);
 
                     context.enqueueCommand = true;
                 }
@@ -38,9 +40,9 @@ namespace SampleGame
                     var command = QueuedCommand.MoveTo(context.point.Value);
                     
                     if (isShiftHeld)
-                        _commandQueue.Enqueue(command);      // Отложенная
+                        _commandQueue.Enqueue(command);      
                     else
-                        _commandQueue.ForceCommand(command); // Прямая (сброс текущей)
+                        _commandQueue.ForceCommand(command); 
 
                     context.enqueueCommand = true;
                 }
