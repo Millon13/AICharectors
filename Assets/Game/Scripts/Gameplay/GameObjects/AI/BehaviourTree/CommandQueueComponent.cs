@@ -99,7 +99,6 @@ namespace SampleGame.AI.BehaviourTree
 
         public void ForceCommand(QueuedCommand command)
         {
-            StopAll();
             Enqueue(command);
         }
 

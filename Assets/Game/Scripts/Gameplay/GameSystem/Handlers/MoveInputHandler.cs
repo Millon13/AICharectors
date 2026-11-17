@@ -13,6 +13,7 @@ namespace SampleGame
         
         [SerializeField]
         private KeyCode _keyCode = KeyCode.M;
+        
         [SerializeField]
         private CommandQueueComponent _commandQueue;
 
@@ -20,20 +21,21 @@ namespace SampleGame
         {
             if (Input.GetKey(_keyCode) && context.leftClick)
             {
+                bool isShift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 bool isShiftHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 bool hasEntity = context.target != null && context.target != _character;
                 bool hasPoint = context.point.HasValue;
-                
+
                 if (hasEntity)
                 {
-                    var command = QueuedCommand.MoveTo(context.target);
-                    
-                    if (isShiftHeld)
-                        _commandQueue.Enqueue(command);     
-                    else
-                        _commandQueue.ForceCommand(command);
+
+                    var cmd = QueuedCommand.MoveTo(context.target);
+                    if (isShift) _commandQueue.Enqueue(cmd);
+                    else _commandQueue.ForceCommand(cmd);
 
                     context.enqueueCommand = true;
+
+
                 }
                 else if (hasPoint)
                 {

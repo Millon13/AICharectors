@@ -6,6 +6,7 @@ namespace SampleGame.AI.BehaviourTree
     public class HoldPositionNode : BehaviourNode
     {
         [SerializeField] private Blackboard _blackboard;
+
         [SerializeField] private CommandQueueComponent _queue;
 
         private TeamComponent _enemyTeam;

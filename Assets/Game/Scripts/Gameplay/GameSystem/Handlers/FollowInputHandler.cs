@@ -10,8 +10,10 @@ namespace SampleGame
 
         [SerializeField]
         private GameObject _character;
+        
         [SerializeField]
         private CommandQueueComponent _commandQueue;
+        
         [SerializeField]
         private InputHandler _next;
 

@@ -6,6 +6,7 @@
     public class MoveToTargetNode : BehaviourNode
     {
         [SerializeField] private Blackboard _blackboard;
+
         [SerializeField] private CommandQueueComponent _queue;
 
         [SerializeField] [BlackboardValueKey(typeof(GameObject))]
@@ -18,13 +19,12 @@
 
         protected override BehaviourResult OnUpdate(float deltaTime)
         {
-            
             if (!_blackboard.HasTag(BlackboardAPI.MoveTo) && !_blackboard.HasTag(BlackboardAPI.AttackCommand))
                 return BehaviourResult.Success;
 
             if (!_blackboard.TryGetValue(BlackboardAPI.Character, out GameObject character))
                 return BehaviourResult.Failure;
-            
+
             if (!string.IsNullOrEmpty(_targetKey) &&
                 _blackboard.TryGetValue(_targetKey, out GameObject target) && target != null)
             {
@@ -45,6 +45,11 @@
 
             if (delta.sqrMagnitude <= _stoppingDistance * _stoppingDistance)
             {
+                if (_blackboard.HasTag(BlackboardAPI.MoveTo))
+                {
+                    _queue.NotifyCommandComplete();
+                }
+
                 return BehaviourResult.Success;
             }
 

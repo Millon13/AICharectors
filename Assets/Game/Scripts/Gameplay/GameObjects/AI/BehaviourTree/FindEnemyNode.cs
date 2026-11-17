@@ -6,6 +6,7 @@ namespace SampleGame.AI.BehaviourTree
     public class FindEnemyNode : BehaviourNode
     {
         [SerializeField] private Blackboard _blackboard;
+
         [SerializeField] private float _searchRadius = 10f;
 
         protected override BehaviourResult OnUpdate(float deltaTime)

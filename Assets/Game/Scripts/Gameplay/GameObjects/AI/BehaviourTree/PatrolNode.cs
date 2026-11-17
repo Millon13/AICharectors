@@ -38,6 +38,7 @@ namespace SampleGame.AI.BehaviourTree
                 {
                     validWaypoints.RemoveAt(i);
                     if (index >= validWaypoints.Count) index = 0;
+                    
                 }
             }
 

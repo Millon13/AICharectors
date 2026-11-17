@@ -27,7 +27,6 @@
             if (!target || !target.activeInHierarchy || !target.TryGetComponent(out HealthComponent health) ||
                 health.IsDead)
             {
-                _queue.NotifyCommandComplete();
                 return BehaviourResult.Success;
             }
 
@@ -36,7 +35,7 @@
 
             if (delta.sqrMagnitude > attackDistance * attackDistance)
                 return BehaviourResult.Running;
-            
+
             if (!character.TryGetComponent(out AttackComponent component))
                 return BehaviourResult.Failure;
 

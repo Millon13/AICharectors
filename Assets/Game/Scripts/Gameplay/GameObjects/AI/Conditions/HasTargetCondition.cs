@@ -5,10 +5,8 @@ using UnityEngine;
 namespace SampleGame.AI.Conditions
 {
     [Serializable]
-
     public class HasTargetCondition : ICondition
     {
-
         [SerializeField] private Blackboard _blackboard;
 
         [SerializeField] [BlackboardValueKey(typeof(GameObject))]
@@ -19,5 +17,4 @@ namespace SampleGame.AI.Conditions
             return _blackboard.TryGetValue(_targetKey, out GameObject target) && target && target.activeInHierarchy;
         }
     }
-
 }

@@ -6,6 +6,7 @@ namespace SampleGame.AI.BehaviourTree
     public class FollowNode : BehaviourNode
     {
         [SerializeField] private Blackboard _blackboard;
+
         [SerializeField] private CommandQueueComponent _queue;
 
         [SerializeField] private float _stoppingDistance = 2f;

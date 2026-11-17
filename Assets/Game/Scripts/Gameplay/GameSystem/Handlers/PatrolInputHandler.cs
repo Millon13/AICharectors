@@ -10,7 +10,9 @@ namespace SampleGame
         
         [SerializeField]
         private GameObject _character;
+        
         [SerializeField] private CommandQueueComponent _commandQueue;
+        
         [SerializeField]
         private InputHandler _next;
 
@@ -32,15 +34,6 @@ namespace SampleGame
                     if (isShift) _commandQueue.Enqueue(cmd);
                     else _commandQueue.ForceCommand(cmd);
                     context.enqueueCommand = true;
-                }
-
-                if (context.enqueueCommand)
-                {
-                   //Очередь команд создать
-                }
-                else
-                {
-                    // TODO: Switch to patrol
                 }
             }
             else if (_next)

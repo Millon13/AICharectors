@@ -13,6 +13,7 @@ namespace SampleGame
 
         [SerializeField]
         private InputHandler _next;
+        
         [SerializeField]
         private CommandQueueComponent _commandQueue;
 
@@ -29,6 +30,7 @@ namespace SampleGame
                     
                     context.enqueueCommand = true;
                 }
+                
                 else if (context.target != null && context.target != _character)
                 {
                     if (_character.TryGetComponent(out TeamComponent myTeam) && myTeam.IsEnemy(context.target))
