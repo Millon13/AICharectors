@@ -1,3 +1,4 @@
+using SampleGame.AI.BehaviourTree;
 using UnityEngine;
 
 namespace SampleGame
@@ -9,7 +10,7 @@ namespace SampleGame
         
         [SerializeField]
         private GameObject _character;
-        
+        [SerializeField] private CommandQueueComponent _commandQueue;
         [SerializeField]
         private InputHandler _next;
         
@@ -17,7 +18,11 @@ namespace SampleGame
         {
             if (Input.GetKeyDown(_keyCode))
             {
-                // TODO: Stop
+                if (_commandQueue != null)
+                {
+                    _commandQueue.StopAll();
+                }
+                context.enqueueCommand = true; 
             }
             else if (_next)
                 _next.Handle(ref context);

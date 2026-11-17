@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace SampleGame.AI.BehaviourTree
 {
-    public class FollowNode: BehaviourNode
+    public class FollowNode : BehaviourNode
     {
-         [SerializeField] private Blackboard _blackboard;
+        [SerializeField] private Blackboard _blackboard;
         [SerializeField] private CommandQueueComponent _queue;
-        
+
         [SerializeField] private float _stoppingDistance = 2f;
 
         protected override BehaviourResult OnUpdate(float deltaTime)
@@ -20,11 +20,10 @@ namespace SampleGame.AI.BehaviourTree
 
             if (!_blackboard.TryGetValue(BlackboardAPI.FollowTarget, out GameObject target) || target == null)
             {
-                
                 _queue.NotifyCommandComplete();
                 return BehaviourResult.Failure;
             }
-            
+
             if (target.TryGetComponent(out HealthComponent health) && health.IsDead)
             {
                 _queue.NotifyCommandComplete();
@@ -33,12 +32,12 @@ namespace SampleGame.AI.BehaviourTree
 
             Vector3 delta = target.transform.position - character.transform.position;
             delta.y = 0;
-            
+
             if (delta.sqrMagnitude <= _stoppingDistance * _stoppingDistance)
             {
                 return BehaviourResult.Running;
             }
-            
+
             character.GetComponent<MoveComponent>().MoveStep(delta.normalized, deltaTime);
             return BehaviourResult.Running;
         }

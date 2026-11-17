@@ -58,6 +58,54 @@ MonoBehaviour:
       data:
         _blackboard: {fileID: 6885350653074852966}
         _tag: HoldPosition
+--- !u!1 &774773111090722973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3625688464555513802}
+  - component: {fileID: 7691716736230975620}
+  m_Layer: 0
+  m_Name: '<HoldPositionNode> '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3625688464555513802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774773111090722973}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3592396815980341871}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7691716736230975620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774773111090722973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e605a58a2342bca58a408333abf527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.HoldPositionNode
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _blackboard: {fileID: 6885350653074852966}
+  _queue: {fileID: 6428563795836966313}
 --- !u!1 &878468366025136267
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4262030293108736181}
-  - component: {fileID: 3650158185307809716}
+  - component: {fileID: 2063699355849052739}
   m_Layer: 0
   m_Name: <Patrol>
   m_TagString: Untagged
@@ -391,7 +439,7 @@ Transform:
   - {fileID: 5876682377040120574}
   m_Father: {fileID: 7860211643641807124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3650158185307809716
+--- !u!114 &2063699355849052739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -400,12 +448,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1979444814381833052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f753cb2311846db8a2cd50ae5dd6cf8, type: 3}
+  m_Script: {fileID: 11500000, guid: ef5aac40b1864451b1b5db36a1e61854, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Modules.AI.BehaviourTree::Modules.AI.BehaviourNodeSequence
+  m_EditorClassIdentifier: Modules.AI.BehaviourTree::Modules.AI.BehaviourNodeWhile
   _useUnityLifecycle: 0
   _updateMode: 0
-  _nodes: []
+  _condition:
+    rid: 4421285083668545622
+  _child: {fileID: 7876146214484056828}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4421285083668545622
+      type: {class: HasTagCondition, ns: SampleGame.AI.Conditions, asm: Assembly-CSharp}
+      data:
+        _blackboard: {fileID: 6885350653074852966}
+        _tag: Patrol
 --- !u!1 &2241791259297307706
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +709,7 @@ MonoBehaviour:
   _blackboard: {fileID: 6885350653074852966}
   _queue: {fileID: 6428563795836966313}
   _targetKey: AttackTarget
-  _stoppingDistance: 1
+  _stoppingDistance: 0.5
   _positionKey: AttackMovePosition
 --- !u!1 &3057427633916700270
 GameObject:
@@ -711,8 +769,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5876682377040120574}
+  - component: {fileID: 681481613433179928}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: <Patroling>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -730,9 +789,30 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7722801763671664891}
+  - {fileID: 4592538788884634706}
+  - {fileID: 7411873655639827309}
   m_Father: {fileID: 4262030293108736181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &681481613433179928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3233232009532335271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ac6a8124c64a76bd4b74ff69f1b1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Modules.AI.BehaviourTree::Modules.AI.BehaviourNodeParallel
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _nodes:
+  - {fileID: 4995034671467928758}
+  - {fileID: 7876146214484056828}
+  - {fileID: 4591064081008913693}
 --- !u!1 &3386926546223425826
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,9 +822,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9110865819211636583}
-  - component: {fileID: 7853852417441154171}
+  - component: {fileID: 6879570626200497788}
   m_Layer: 0
-  m_Name: <HoldPositionNode>
+  m_Name: <FindEnemyNode>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -765,7 +845,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3592396815980341871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7853852417441154171
+--- !u!114 &6879570626200497788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -774,14 +854,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3386926546223425826}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91e605a58a2342bca58a408333abf527, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e69afdc8e674d6e999e2e6b1955e6c8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.HoldPositionNode
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.FindEnemyNode
   _useUnityLifecycle: 0
   _updateMode: 0
   _blackboard: {fileID: 6885350653074852966}
-  _queue: {fileID: 6428563795836966313}
-  _targetKey: HoldTarget
+  _searchRadius: 10
 --- !u!1 &3395702405519933801
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,6 +919,54 @@ MonoBehaviour:
       data:
         _blackboard: {fileID: 6885350653074852966}
         _tag: MoveTo
+--- !u!1 &3520359422740598700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7722801763671664891}
+  - component: {fileID: 4995034671467928758}
+  m_Layer: 0
+  m_Name: <FindEnemyNode>
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7722801763671664891
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520359422740598700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5876682377040120574}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4995034671467928758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520359422740598700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e69afdc8e674d6e999e2e6b1955e6c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.FindEnemyNode
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _blackboard: {fileID: 6885350653074852966}
+  _searchRadius: 10
 --- !u!1 &3567639071738180890
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,6 +998,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9110865819211636583}
+  - {fileID: 3625688464555513802}
   - {fileID: 1092539672052425713}
   m_Father: {fileID: 3094598741077396294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -889,7 +1017,8 @@ MonoBehaviour:
   _useUnityLifecycle: 0
   _updateMode: 0
   _nodes:
-  - {fileID: 7853852417441154171}
+  - {fileID: 6879570626200497788}
+  - {fileID: 7691716736230975620}
   - {fileID: 2399761104849038854}
 --- !u!1 &4186404731394919595
 GameObject:
@@ -942,6 +1071,53 @@ MonoBehaviour:
   _nodes:
   - {fileID: 5290371925559882475}
   - {fileID: 234765061417584393}
+--- !u!1 &4394714849079593838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4592538788884634706}
+  - component: {fileID: 7876146214484056828}
+  m_Layer: 0
+  m_Name: <PatrolNode>
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4592538788884634706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4394714849079593838}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5876682377040120574}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7876146214484056828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4394714849079593838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30872573a0e240e2a756bb5bb5762330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.PatrolNode
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _blackboard: {fileID: 6885350653074852966}
 --- !u!1 &4396203420848845825
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,9 +1173,10 @@ MonoBehaviour:
   _nodes:
   - {fileID: 8296338873005523879}
   - {fileID: 335271970238002518}
-  - {fileID: 0}
-  - {fileID: 3452002763954901950}
-  - {fileID: 3650158185307809716}
+  - {fileID: 4644327744481607854}
+  - {fileID: 282307068249418272}
+  - {fileID: 2063699355849052739}
+  - {fileID: 2814563148961772961}
 --- !u!1 &4462297595431819534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1225,7 @@ MonoBehaviour:
   installers:
   - rid: 4421284948824555598
   - rid: 4421285062422036567
+  - rid: 4421285083668545642
   autoCompile: 0
   initialTagCapacity: 0
   initialValueCapacity: 2
@@ -1063,6 +1241,11 @@ MonoBehaviour:
       type: {class: FloatBlackboardInstaller, ns: Modules.AI, asm: Modules.AI.Blackboard}
       data:
         key: MeleeDistance
+        value: 2
+    - rid: 4421285083668545642
+      type: {class: FloatBlackboardInstaller, ns: Modules.AI, asm: Modules.AI.Blackboard}
+      data:
+        key: StoppingDistance
         value: 1.5
 --- !u!1 &4656303723494667352
 GameObject:
@@ -1104,7 +1287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6194977072197407380}
-  - component: {fileID: 3452002763954901950}
+  - component: {fileID: 2814563148961772961}
   m_Layer: 0
   m_Name: '<Stop> '
   m_TagString: Untagged
@@ -1128,7 +1311,7 @@ Transform:
   - {fileID: 7763277866693309948}
   m_Father: {fileID: 7860211643641807124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3452002763954901950
+--- !u!114 &2814563148961772961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1275,6 +1458,56 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6428220308093089618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bac6edefd64f15a9ff34e84447e4f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AI.BehaviourTree.AttackTargetNode
+  _useUnityLifecycle: 0
+  _updateMode: 0
+  _blackboard: {fileID: 6885350653074852966}
+  _distanceKey: MeleeDistance
+  _queue: {fileID: 6428563795836966313}
+  _targetKey: AttackTarget
+--- !u!1 &7694184239500966239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7411873655639827309}
+  - component: {fileID: 4591064081008913693}
+  m_Layer: 0
+  m_Name: '<AttackNode> '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7411873655639827309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7694184239500966239}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5876682377040120574}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4591064081008913693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7694184239500966239}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99bac6edefd64f15a9ff34e84447e4f1, type: 3}
@@ -1627,7 +1860,7 @@ MonoBehaviour:
   _blackboard: {fileID: 6885350653074852966}
   _distanceKey: MeleeDistance
   _queue: {fileID: 6428563795836966313}
-  _targetKey: Enemy
+  _targetKey: AttackTarget
 --- !u!1 &9155416349111664494
 GameObject:
   m_ObjectHideFlags: 0

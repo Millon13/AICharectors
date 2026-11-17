@@ -3,7 +3,7 @@
     using Modules.AI;
     using UnityEngine;
 
-    public class AttackTargetNode:BehaviourNode
+    public class AttackTargetNode : BehaviourNode
     {
         [SerializeField] private Blackboard _blackboard;
 
@@ -11,6 +11,7 @@
         private string _distanceKey;
 
         [SerializeField] private CommandQueueComponent _queue;
+
         [SerializeField] [BlackboardValueKey(typeof(GameObject))]
         private string _targetKey;
 
@@ -22,7 +23,7 @@
                 return BehaviourResult.Running;
             if (!_blackboard.TryGetValue(_distanceKey, out float attackDistance))
                 return BehaviourResult.Running;
-           
+
             if (!target || !target.activeInHierarchy || !target.TryGetComponent(out HealthComponent health) ||
                 health.IsDead)
             {
@@ -35,14 +36,12 @@
 
             if (delta.sqrMagnitude > attackDistance * attackDistance)
                 return BehaviourResult.Running;
-                //return BehaviourResult.Failure;
-            //AttackComponent component = character.GetComponent<AttackComponent>();
+            
             if (!character.TryGetComponent(out AttackComponent component))
                 return BehaviourResult.Failure;
 
             component.Attack(target);
             return BehaviourResult.Running;
-
         }
     }
 }

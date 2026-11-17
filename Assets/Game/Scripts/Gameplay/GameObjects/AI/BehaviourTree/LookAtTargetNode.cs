@@ -3,12 +3,11 @@ using UnityEngine;
 
 namespace SampleGame.AI.BehaviourTree
 {
-    public class LookAtTargetNode: BehaviourNode
+    public class LookAtTargetNode : BehaviourNode
     {
         [SerializeField] private Blackboard _blackboard;
 
-        [SerializeField]
-        [BlackboardValueKey(typeof(GameObject))]
+        [SerializeField] [BlackboardValueKey(typeof(GameObject))]
         private string _targetKey;
 
         [SerializeField] private float _minAngle = 5f;
@@ -37,6 +36,5 @@ namespace SampleGame.AI.BehaviourTree
 
             return BehaviourResult.Running;
         }
-    
     }
 }

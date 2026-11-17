@@ -3,20 +3,17 @@ using UnityEngine;
 
 namespace SampleGame.AI.BehaviourTree
 {
-    public class KeepTargetDistanceNode: BehaviourNode
+    public class KeepTargetDistanceNode : BehaviourNode
     {
         [SerializeField] private Blackboard _blackboard;
 
-        [SerializeField]
-        [BlackboardValueKey(typeof(float))]
+        [SerializeField] [BlackboardValueKey(typeof(float))]
         private string _minDistanceKey;
 
-        [SerializeField]
-        [BlackboardValueKey(typeof(float))]
+        [SerializeField] [BlackboardValueKey(typeof(float))]
         private string _maxDistanceKey;
 
-        [SerializeField]
-        [BlackboardValueKey(typeof(GameObject))]
+        [SerializeField] [BlackboardValueKey(typeof(GameObject))]
         private string _targetKey;
 
         protected override BehaviourResult OnUpdate(float deltaTime)
@@ -43,6 +40,7 @@ namespace SampleGame.AI.BehaviourTree
                 character.GetComponent<MoveComponent>().MoveStep(delta.normalized, deltaTime);
                 return BehaviourResult.Running;
             }
+
             return BehaviourResult.Running;
         }
 

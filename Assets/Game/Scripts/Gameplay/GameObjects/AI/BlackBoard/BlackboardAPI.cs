@@ -4,18 +4,19 @@ using Modules.AI;
 public static class BlackboardAPI
 {
     public static BlackboardValueKey<GameObject> Character = new(nameof(Character));
-
-    
+    //BotAlly
+    public static readonly BlackboardValueKey<Vector3> HomePosition = new(nameof(HomePosition));
     //Stop
-   
-    //Moving
-    // MoveTo command
+    public static readonly BlackboardTagKey Stop = new(nameof(Stop));
+    // MoveTo 
     public static readonly BlackboardTagKey MoveTo = new(nameof(MoveTo));
     public static readonly BlackboardValueKey<Vector3> MoveToPosition = new(nameof(MoveToPosition));
     public static readonly BlackboardValueKey<GameObject> MoveToTarget = new(nameof(MoveToTarget));
     //Patrol
+    public static readonly BlackboardTagKey Patrol = new(nameof(Patrol));
     public static readonly BlackboardValueKey<Transform[]> Waypoints = new(nameof(Waypoints)); 
     public static readonly BlackboardValueKey<int> WaypointIndex = new(nameof(WaypointIndex));
+    
     public static readonly BlackboardValueKey<Vector3> TargetPosition = new(nameof(TargetPosition));
     public static readonly BlackboardValueKey<float> StoppingDistance = new(nameof(StoppingDistance));
     public static readonly BlackboardValueKey<float> StoppingAngle = new(nameof(StoppingAngle));

@@ -4,44 +4,78 @@ using UnityEngine;
 
 namespace SampleGame.AI.BehaviourTree
 {
-    public enum CommandType { HoldPosition, MoveTo,Follow,Attack }
+    public enum CommandType
+    {
+        HoldPosition,
+        MoveTo,
+        Follow,
+        Attack,
+        Patrol,
+        Stop
+    }
 
     public readonly struct QueuedCommand
     {
         public readonly CommandType Type;
         public readonly float Radius;
-        public readonly Vector3 Position;      
-        public readonly GameObject Target; 
+        public readonly Vector3 Position;
+        public readonly GameObject Target;
+        public readonly bool AddToPatrolList;
 
-        public QueuedCommand(CommandType type,float radius = 0f)
+        [System.Serializable]
+        public struct WayPoint
+        {
+            public Vector3 Position;
+            public GameObject Entity;
+
+            public WayPoint(Vector3 position, GameObject entity)
+            {
+                Position = position;
+                Entity = entity;
+            }
+        }
+
+        public QueuedCommand(CommandType type, float radius = 0f, bool addToPatrol = false)
         {
             Type = type;
             Radius = radius;
             Position = default;
             Target = null;
-            
+            AddToPatrolList = false;
         }
-        private QueuedCommand(CommandType type, Vector3 position, GameObject target)
+
+        private QueuedCommand(CommandType type, Vector3 position, GameObject target, bool addToPatrol = false)
         {
             Type = type;
             Radius = 0f;
             Position = position;
             Target = target;
+            AddToPatrolList = addToPatrol;
         }
-        public static QueuedCommand MoveTo(Vector3 position) 
+
+        public static QueuedCommand MoveTo(Vector3 position)
             => new QueuedCommand(CommandType.MoveTo, position, null);
-    
-        public static QueuedCommand MoveTo(GameObject target) 
+
+        public static QueuedCommand MoveTo(GameObject target)
             => new QueuedCommand(CommandType.MoveTo, default, target);
+
         public static QueuedCommand Follow(GameObject target)
             => new QueuedCommand(CommandType.Follow, default, target);
-        public static QueuedCommand Attack(Vector3 position) 
+
+        public static QueuedCommand Attack(Vector3 position)
             => new QueuedCommand(CommandType.Attack, position, null);
 
-        public static QueuedCommand Attack(GameObject target) 
+        public static QueuedCommand Attack(GameObject target)
             => new QueuedCommand(CommandType.Attack, default, target);
+
+        public static QueuedCommand Patrol(Vector3 position, bool addToList = false)
+            => new QueuedCommand(CommandType.Patrol, position, null, addToList);
+
+        public static QueuedCommand Patrol(GameObject target, bool addToPatrol = false)
+            => new QueuedCommand(CommandType.Patrol, default, target, addToPatrol);
     }
-    public class CommandQueueComponent: MonoBehaviour
+
+    public class CommandQueueComponent : MonoBehaviour
     {
         [SerializeField] private Blackboard _blackboard;
         [SerializeField] private float _defaultHoldRadius = 6f;
@@ -51,7 +85,7 @@ namespace SampleGame.AI.BehaviourTree
 
         public bool HasCurrent => _current.HasValue;
         public int QueueCount => _queue.Count;
-        
+
         public void Enqueue(QueuedCommand command)
         {
             if (_current.HasValue)
@@ -59,22 +93,27 @@ namespace SampleGame.AI.BehaviourTree
                 _queue.Enqueue(command);
                 return;
             }
+
             StartCommand(command);
         }
+
         public void ForceCommand(QueuedCommand command)
         {
-        
-            StopAll();         
-            Enqueue(command);   
+            StopAll();
+            Enqueue(command);
         }
+
         public void StopAll()
         {
             _queue.Clear();
             if (_current.HasValue)
                 FinishCurrent();
             _current = null;
+
+
+            SyncQueueTag();
         }
-        
+
 
         private void StartCommand(QueuedCommand command)
         {
@@ -82,27 +121,62 @@ namespace SampleGame.AI.BehaviourTree
 
             switch (command.Type)
             {
+                case CommandType.Patrol:
+                    GameObject marker = new GameObject("PatrolPoint_Marker");
+
+                    if (command.Target != null)
+                    {
+                        marker.transform.position = command.Target.transform.position;
+                        marker.name = $"PatrolPoint_{command.Target.name}";
+                    }
+                    else
+                    {
+                        marker.transform.position = command.Position;
+                    }
+
+                    if (command.AddToPatrolList &&
+                        _blackboard.TryGetValue(BlackboardAPI.Waypoints, out Transform[] existing))
+                    {
+                        var newArr = new Transform[existing.Length + 1];
+                        existing.CopyTo(newArr, 0);
+                        newArr[existing.Length] = marker.transform;
+                        _blackboard.SetReferenceValue(BlackboardAPI.Waypoints, newArr);
+                    }
+                    else
+                    {
+                        GameObject baseMarker = new GameObject("PatrolPoint_Base");
+                        baseMarker.transform.position = transform.position;
+
+                        var newArr = new Transform[] { baseMarker.transform, marker.transform };
+                        _blackboard.SetReferenceValue(BlackboardAPI.Waypoints, newArr);
+                        _blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 0);
+                        _blackboard.AddTag(BlackboardAPI.Patrol);
+                    }
+
+                    break;
                 case CommandType.HoldPosition:
                     _blackboard.AddTag(BlackboardAPI.HoldPosition);
                     _blackboard.SetPrimitiveValue(BlackboardAPI.HoldPositionPoint, transform.position);
-                    _blackboard.SetPrimitiveValue(BlackboardAPI.HoldAttackRadius, command.Radius > 0 ? command.Radius : _defaultHoldRadius);
+                    _blackboard.SetPrimitiveValue(BlackboardAPI.HoldAttackRadius,
+                        command.Radius > 0 ? command.Radius : _defaultHoldRadius);
                     _blackboard.AddTag(BlackboardAPI.HoldPosition);
                     break;
                 case CommandType.MoveTo:
                     if (command.Target != null)
                     {
                         _blackboard.SetReferenceValue(BlackboardAPI.MoveToTarget, command.Target);
-                        _blackboard.DelValue(BlackboardAPI.MoveToPosition); 
+                        _blackboard.DelValue(BlackboardAPI.MoveToPosition);
                     }
                     else
                     {
                         _blackboard.SetPrimitiveValue(BlackboardAPI.MoveToPosition, command.Position);
-                        _blackboard.DelValue(BlackboardAPI.MoveToTarget); 
+                        _blackboard.DelValue(BlackboardAPI.MoveToTarget);
                     }
+
                     _blackboard.AddTag(BlackboardAPI.MoveTo);
                     break;
                 case CommandType.Follow:
-                    _blackboard.AddTag(BlackboardAPI.Follow); 
+                    _blackboard.AddTag(BlackboardAPI.Follow);
                     if (command.Target != null)
                         _blackboard.SetReferenceValue(BlackboardAPI.FollowTarget, command.Target);
                     break;
@@ -118,12 +192,13 @@ namespace SampleGame.AI.BehaviourTree
                         _blackboard.SetPrimitiveValue(BlackboardAPI.AttackMovePosition, command.Position);
                         _blackboard.DelValue(BlackboardAPI.AttackTarget);
                     }
+
                     break;
             }
 
             SyncQueueTag();
         }
-        
+
         public void NotifyCommandComplete()
         {
             if (!_current.HasValue) return;
@@ -141,6 +216,19 @@ namespace SampleGame.AI.BehaviourTree
         {
             switch (_current.Value.Type)
             {
+                case CommandType.Patrol:
+                    _blackboard.DelTag(BlackboardAPI.Patrol);
+                    if (_blackboard.TryGetValue(BlackboardAPI.Waypoints, out Transform[] wps) && wps != null)
+                    {
+                        foreach (var wp in wps)
+                        {
+                            if (wp != null && wp.name.Contains("PatrolPoint"))
+                                Destroy(wp.gameObject);
+                        }
+                    }
+
+                    _blackboard.DelValue(BlackboardAPI.Waypoints);
+                    break;
                 case CommandType.HoldPosition:
                     _blackboard.DelTag(BlackboardAPI.HoldPosition);
                     break;
@@ -168,5 +256,4 @@ namespace SampleGame.AI.BehaviourTree
                 _blackboard.DelTag(BlackboardAPI.HasQueuedCommand);
         }
     }
-    
 }
