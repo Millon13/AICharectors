@@ -27,6 +27,7 @@
             if (!target || !target.activeInHierarchy || !target.TryGetComponent(out HealthComponent health) ||
                 health.IsDead)
             {
+                _queue.NotifyCommandComplete();
                 return BehaviourResult.Success;
             }
 
